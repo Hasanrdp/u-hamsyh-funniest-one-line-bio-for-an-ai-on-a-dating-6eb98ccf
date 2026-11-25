@@ -19,6 +19,11 @@ BIO_BYTES = 127
 OUT = "/output/entry.txt"
 
 
+# Gate contract: the bio must be 1-180 chars, a single line with no
+# trailing newline, and its bytes must match the pinned sha256 below.
+# write_entry() returns the raw bytes it just read back from disk, so
+# main() verifies what actually landed on disk, not what it intended
+# to write — a truncated or corrupted write fails here, not on the grader.
 def write_entry() -> bytes:
     line = BIO.strip()
     if not 1 <= len(line) <= 180:
